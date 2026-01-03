@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: .
+      args:
+        # Pass your Gemini API key at build time if you want real movie data
+        GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
