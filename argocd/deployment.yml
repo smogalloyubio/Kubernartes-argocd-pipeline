@@ -1,0 +1,39 @@
+# k8s/netflixapp-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netflixapp
+  labels:
+    app: netflixapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: netflixapp
+  template:
+    metadata:
+      labels:
+        app: netflixapp
+    spec:
+      containers:
+        - name: netflixapp
+          image: rukevweubio/mynetflixapp:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80  # Change if your app uses a different port
+          env:
+            - name: NODE_ENV
+              value: "production"
+            # Add other env vars here if needed, e.g.
+            # - name: GEMINI_API_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: netflixapp-secrets
+            #       key: GEMINI_API_KEY
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
