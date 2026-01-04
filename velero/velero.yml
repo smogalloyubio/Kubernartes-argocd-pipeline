@@ -1,3 +1,32 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: velero
+  namespace: velero
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: velero
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: velero
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: velero
+subjects:
+  - kind: ServiceAccount
+    name: velero
+    namespace: velero
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,7 +45,7 @@ spec:
       serviceAccountName: velero
       containers:
         - name: velero
-          image: velero/velero:v1.12.0
+          image: velero/velero:v1.17.1
           command:
             - /velero
           args:
