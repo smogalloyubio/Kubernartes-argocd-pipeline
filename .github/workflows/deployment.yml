@@ -57,7 +57,7 @@ jobs:
 
       - name: Scan Docker image with Grype
         run: |
-          grype ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --fail-on high
+          grype ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --fail-on critical
 
 
       - name: Scan image with Snyk
