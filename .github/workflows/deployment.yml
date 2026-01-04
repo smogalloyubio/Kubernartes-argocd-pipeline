@@ -51,11 +51,13 @@ jobs:
           vuln-type: os,library
 
 
-      - name: Scan image with Grype
-        uses: anchore/grype-action@main
-        with:
-          image: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          fail-build: true
+      - name: Install Grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin v0.61.0
+
+      - name: Scan Docker image with Grype
+        run: |
+          grype ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --fail-on high,critical
 
 
       - name: Scan image with Snyk
