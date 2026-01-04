@@ -52,8 +52,7 @@ jobs:
 
 
       - name: Scan image with Grype
-        uses: anchore/grype-action@v0.14.0
-
+        uses: anchore/grype-action@main
         with:
           image: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           fail-build: true
